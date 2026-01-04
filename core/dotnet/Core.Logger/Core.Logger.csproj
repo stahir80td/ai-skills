@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- NuGet Package Metadata -->
+    <PackageId>Core.Logger</PackageId>
+    <Version>1.0.5</Version>
+    <Authors>AI Platform Team</Authors>
+    <Company>ADC</Company>
+    <Description>Structured logging for AI services using Serilog</Description>
+    <PackageTags>AI;logging;serilog</PackageTags>
+    <RepositoryUrl>https://github.com/your-github-org/ai-scaffolder</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/your-github-org/ai-scaffolder</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Serilog" Version="4.1.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="3.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+  </ItemGroup>
+
+</Project>
+
+
+
+
+
+
+
+
+
+

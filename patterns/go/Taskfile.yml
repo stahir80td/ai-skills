@@ -1,0 +1,191 @@
+version: '3'
+
+vars:
+  SERVICE_NAME: ai-patterns
+  VERSION:
+    sh: cat ../../VERSION 2>/dev/null || echo "0.0.1"
+  GO_VERSION: "1.24"
+  BUILD_DIR: ./bin
+  MAIN_FILE: ./cmd/patterns/main.go
+
+tasks:
+  default:
+    desc: Show available tasks
+    cmds:
+      - task --list
+
+  # ============================================================================
+  # Development Tasks
+  # ============================================================================
+  
+  dev:
+    desc: Run the service in development mode
+    cmds:
+      - go run {{.MAIN_FILE}}
+    env:
+      ENVIRONMENT: development
+      LOG_LEVEL: debug
+      PORT: "8080"
+
+  dev:watch:
+    desc: Run with hot reload (requires air)
+    cmds:
+      - air -c .air.toml
+
+  # ============================================================================
+  # Build Tasks
+  # ============================================================================
+  
+  build:
+    desc: Build the service binary
+    cmds:
+      - go build -ldflags "-X main.Version={{.VERSION}}" -o {{.BUILD_DIR}}/{{.SERVICE_NAME}} {{.MAIN_FILE}}
+    sources:
+      - ./**/*.go
+    generates:
+      - '{{.BUILD_DIR}}/{{.SERVICE_NAME}}'
+
+  build:linux:
+    desc: Build for Linux (container deployment)
+    cmds:
+      - GOOS=linux GOARCH=amd64 go build -ldflags "-X main.Version={{.VERSION}}" -o {{.BUILD_DIR}}/{{.SERVICE_NAME}}-linux {{.MAIN_FILE}}
+    env:
+      CGO_ENABLED: "0"
+
+  build:docker:
+    desc: Build Docker image
+    cmds:
+      - docker build -t {{.SERVICE_NAME}}:{{.VERSION}} -t {{.SERVICE_NAME}}:latest .
+
+  clean:
+    desc: Clean build artifacts
+    cmds:
+      - rm -rf {{.BUILD_DIR}}
+      - rm -rf coverage
+      - go clean -cache
+
+  # ============================================================================
+  # Testing Tasks
+  # ============================================================================
+  
+  test:
+    desc: Run all tests
+    cmds:
+      - go test -v ./...
+
+  test:coverage:
+    desc: Run tests with coverage
+    cmds:
+      - mkdir -p coverage
+      - go test -v -coverprofile=coverage/coverage.out ./...
+      - go tool cover -html=coverage/coverage.out -o coverage/coverage.html
+      - go tool cover -func=coverage/coverage.out
+
+  test:race:
+    desc: Run tests with race detector
+    cmds:
+      - go test -v -race ./...
+
+  test:bench:
+    desc: Run benchmarks
+    cmds:
+      - go test -v -bench=. -benchmem ./...
+
+  # ============================================================================
+  # Code Quality Tasks
+  # ============================================================================
+  
+  lint:
+    desc: Run linters
+    cmds:
+      - golangci-lint run ./...
+
+  fmt:
+    desc: Format code
+    cmds:
+      - go fmt ./...
+      - goimports -w .
+
+  vet:
+    desc: Run go vet
+    cmds:
+      - go vet ./...
+
+  check:
+    desc: Run all quality checks
+    deps: [fmt, vet, lint, test]
+
+  # ============================================================================
+  # Dependency Management
+  # ============================================================================
+  
+  deps:
+    desc: Download dependencies
+    cmds:
+      - go mod download
+
+  deps:tidy:
+    desc: Tidy dependencies
+    cmds:
+      - go mod tidy
+
+  deps:upgrade:
+    desc: Upgrade all dependencies
+    cmds:
+      - go get -u ./...
+      - go mod tidy
+
+  deps:verify:
+    desc: Verify dependencies
+    cmds:
+      - go mod verify
+
+  # ============================================================================
+  # Documentation Tasks
+  # ============================================================================
+  
+  docs:
+    desc: Generate documentation
+    cmds:
+      - godoc -http=:6060
+
+  docs:api:
+    desc: Generate API documentation (requires swag)
+    cmds:
+      - swag init -g {{.MAIN_FILE}} -o ./docs/swagger
+
+  # ============================================================================
+  # Infrastructure Tasks
+  # ============================================================================
+  
+  infra:up:
+    desc: Start local infrastructure (SQL Server, MongoDB, ScyllaDB, Redis, Kafka)
+    cmds:
+      - docker-compose -f docker-compose.infra.yml up -d
+
+  infra:down:
+    desc: Stop local infrastructure
+    cmds:
+      - docker-compose -f docker-compose.infra.yml down
+
+  infra:logs:
+    desc: View infrastructure logs
+    cmds:
+      - docker-compose -f docker-compose.infra.yml logs -f
+
+  # ============================================================================
+  # Release Tasks
+  # ============================================================================
+  
+  release:
+    desc: Create a release build
+    deps: [check, build:linux]
+    cmds:
+      - echo "Release {{.VERSION}} ready"
+
+  version:
+    desc: Show version information
+    cmds:
+      - echo "Service {{.SERVICE_NAME}}"
+      - echo "Version {{.VERSION}}"
+      - echo "Go Version {{.GO_VERSION}}"

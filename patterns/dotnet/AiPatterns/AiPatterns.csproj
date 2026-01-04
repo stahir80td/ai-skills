@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>AiPatterns</AssemblyName>
+    <RootNamespace>AiPatterns</RootNamespace>
+    <UserSecretsId>patterns-project</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Core AI Packages -->
+    <ProjectReference Include="../../../core/dotnet/Core.Config/Core.Config.csproj" />
+    <ProjectReference Include="../../../core/dotnet/Core.Logger/Core.Logger.csproj" />
+    <ProjectReference Include="../../../core/dotnet/Core.Errors/Core.Errors.csproj" />
+    <ProjectReference Include="../../../core/dotnet/Core.Sli/Core.Sli.csproj" />
+    <ProjectReference Include="../../../core/dotnet/Core.Reliability/Core.Reliability.csproj" />
+    <ProjectReference Include="../../../core/dotnet/Core.Infrastructure/Core.Infrastructure.csproj" />
+    <ProjectReference Include="../../../core/dotnet/Core.Metrics/Core.Metrics.csproj" />
+    <ProjectReference Include="../../../core/dotnet/Core.Sod/Core.Sod.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- ASP.NET Core Dependencies -->
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    
+    <!-- Health Checks for all data platforms -->
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="8.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="8.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="8.1.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.Kafka" Version="8.0.1" />
+    
+    <!-- Prometheus Metrics -->
+    <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
+    
+    <!-- Serilog Integration -->
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
+    <PackageReference Include="Serilog.Formatting.Compact" Version="3.0.0" />
+    
+    <!-- Testing -->
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>

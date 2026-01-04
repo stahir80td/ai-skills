@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- NuGet Package Metadata -->
+    <PackageId>Core.Reliability</PackageId>
+    <Version>1.0.5</Version>
+    <Authors>AI Platform Team</Authors>
+    <Company>ADC</Company>
+    <Description>Reliability patterns (Circuit Breaker, Retry, Bulkhead) for AI services using Polly</Description>
+    <PackageTags>AI;reliability;polly;circuit-breaker;retry</PackageTags>
+    <RepositoryUrl>https://github.com/your-github-org/ai-scaffolder</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/your-github-org/ai-scaffolder</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Polly" Version="8.5.0" />
+    <PackageReference Include="Polly.Extensions.Http" Version="3.0.0" />
+    <PackageReference Include="prometheus-net" Version="8.2.1" />
+  </ItemGroup>
+
+</Project>

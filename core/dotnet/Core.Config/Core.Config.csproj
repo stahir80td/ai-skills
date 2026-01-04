@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- NuGet Package Metadata -->
+    <PackageId>Core.Config</PackageId>
+    <Version>1.0.5</Version>
+    <Authors>AI Platform Team</Authors>
+    <Company>ADC</Company>
+    <Description>Configuration management for AI services</Description>
+    <PackageTags>AI;config;configuration</PackageTags>
+    <RepositoryUrl>https://github.com/your-github-org/ai-scaffolder</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/your-github-org/ai-scaffolder</PackageProjectUrl>
+  </PropertyGroup>
+
+</Project>
+
+
+
+
+
+
+
+
+
+

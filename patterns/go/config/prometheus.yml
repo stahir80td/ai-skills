@@ -1,0 +1,53 @@
+# =============================================================================
+# Prometheus Configuration for AI Patterns
+# =============================================================================
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    monitor: 'ai-patterns'
+
+# Alerting configuration (optional)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+
+# Rule files (optional)
+rule_files: []
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # AI Patterns service
+  - job_name: 'ai-patterns'
+    static_configs:
+      - targets: ['host.docker.internal:8080']
+    metrics_path: '/metrics'
+    scrape_interval: 10s
+
+  # ScyllaDB metrics (if enabled)
+  - job_name: 'scylladb'
+    static_configs:
+      - targets: ['scylladb:9180']
+    scrape_interval: 30s
+
+  # Redis metrics (requires redis_exporter)
+  # - job_name: 'redis'
+  #   static_configs:
+  #     - targets: ['redis-exporter:9121']
+
+  # MongoDB metrics (requires mongodb_exporter)
+  # - job_name: 'mongodb'
+  #   static_configs:
+  #     - targets: ['mongodb-exporter:9216']
+
+  # SQL Server metrics (requires mssql_exporter)
+  # - job_name: 'sqlserver'
+  #   static_configs:
+  #     - targets: ['mssql-exporter:4000']

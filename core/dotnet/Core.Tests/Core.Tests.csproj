@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.5.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Logger\Core.Logger.csproj" />
+    <ProjectReference Include="..\Core.Errors\Core.Errors.csproj" />
+    <ProjectReference Include="..\Core.Metrics\Core.Metrics.csproj" />
+    <ProjectReference Include="..\Core.Config\Core.Config.csproj" />
+    <ProjectReference Include="..\Core.Sli\Core.Sli.csproj" />
+    <ProjectReference Include="..\Core.Sod\Core.Sod.csproj" />
+    <ProjectReference Include="..\Core.Reliability\Core.Reliability.csproj" />
+    <ProjectReference Include="..\Core.Infrastructure\Core.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

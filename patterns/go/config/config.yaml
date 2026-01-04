@@ -1,0 +1,45 @@
+service:
+  name: ai-patterns
+  version: 1.0.0
+  port: 8080
+  environment: development
+
+logging:
+  level: debug
+  enable_caller: true
+  enable_stacktrace: true
+
+sqlserver:
+  server: localhost:1433
+  database: AiPatterns
+  user: sa
+  password: AiPatterns2024!
+  ping_timeout: 60s
+
+mongodb:
+  connection_uri: mongodb://localhost:27017
+  database: AiPatternsDB
+  ping_timeout: 60s
+
+scylladb:
+  hosts:
+    - localhost
+  keyspace: ai_patterns
+  timeout: 60s
+  connect_timeout: 60s
+
+redis:
+  host: localhost
+  port: 6379
+  ping_timeout: 60s
+
+kafka:
+  brokers:
+    - localhost:9092
+
+# SLI Error Budget configuration
+sli:
+  availability_target: 99.9
+  latency_p95_target_ms: 200
+  latency_p99_target_ms: 500
+  error_rate_target_percent: 0.1

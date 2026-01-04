@@ -1,0 +1,141 @@
+version: '3'
+
+vars:
+  ROOT_DIR: '{{.ROOT_DIR | default "."}}'
+
+tasks:
+  # =============================================================================
+  # BUILD
+  # =============================================================================
+  build:
+    desc: "Build all core packages"
+    cmds:
+      - task: build-go
+      - task: build-python
+      - task: build-dotnet
+
+  build-go:
+    desc: "Build Go core package"
+    dir: core/go
+    cmds:
+      - go build ./...
+
+  build-python:
+    desc: "Build Python core package"
+    dir: core/python
+    cmds:
+      - python -m pip install -e . -q
+
+  build-dotnet:
+    desc: "Build .NET core packages"
+    dir: core/dotnet
+    cmds:
+      - dotnet build Core.sln
+
+  # =============================================================================
+  # TEST
+  # =============================================================================
+  test:
+    desc: "Run all tests"
+    cmds:
+      - task: test-go
+      - task: test-python
+      - task: test-dotnet
+
+  test-go:
+    desc: "Run Go tests"
+    dir: core/go
+    cmds:
+      - go test ./... -v
+
+  test-python:
+    desc: "Run Python tests"
+    dir: core/python
+    cmds:
+      - python -m pytest tests/ -v
+
+  test-dotnet:
+    desc: "Run .NET tests"
+    dir: core/dotnet
+    cmds:
+      - dotnet test Core.Tests/Core.Tests.csproj -v normal
+
+  # =============================================================================
+  # FORMAT
+  # =============================================================================
+  format:
+    desc: "Format all code"
+    cmds:
+      - task: format-go
+      - task: format-python
+      - task: format-dotnet
+
+  format-go:
+    desc: "Format Go code"
+    dir: core/go
+    cmds:
+      - go fmt ./...
+
+  format-python:
+    desc: "Format Python code"
+    dir: core/python
+    cmds:
+      - python -m black . 2>/dev/null || echo "Black not installed, skipping"
+
+  format-dotnet:
+    desc: "Format .NET code"
+    dir: core/dotnet
+    cmds:
+      - dotnet format Core.sln 2>/dev/null || echo "dotnet format not available"
+
+  # =============================================================================
+  # PUBLISH
+  # =============================================================================
+  publish:
+    desc: "Publish all core packages to Artifactory"
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File "{{.ROOT_DIR}}/scripts/publish-core.ps1"
+
+  publish-skip-tests:
+    desc: "Publish all core packages (skip tests)"
+    cmds:
+      - powershell -NoProfile -ExecutionPolicy Bypass -File "{{.ROOT_DIR}}/scripts/publish-core.ps1" -SkipTests
+
+  # =============================================================================
+  # COMBINED TASKS
+  # =============================================================================
+  doall:
+    desc: "Format, build, test, and publish"
+    cmds:
+      - task: format
+      - task: build
+      - task: test
+      - task: publish
+      - task: push
+
+  do:
+    desc: "Format, build, and test (no publish)"
+    cmds:
+      - task: format
+      - task: build
+      - task: test
+
+  push:
+    desc: "Push all changes to git"
+    cmds:
+      - git add -A
+      - 'git commit -m "chore: update core packages" --allow-empty'
+      - git push origin main
+
+  # =============================================================================
+  # HELP
+  # =============================================================================
+  help:
+    desc: "Show all available tasks"
+    cmds:
+      - task -l
+
+  default:
+    desc: "Show help"
+    cmds:
+      - task: help

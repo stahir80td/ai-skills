@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <!-- NuGet Package Metadata -->
+    <PackageId>Core.Sod</PackageId>
+    <Version>1.0.5</Version>
+    <Authors>AI Platform Team</Authors>
+    <Company>ADC</Company>
+    <Description>Service Object Definitions (SOD) for AI services with standardized observability patterns</Description>
+    <PackageTags>AI;sod;observability;metrics</PackageTags>
+    <RepositoryUrl>https://github.com/your-github-org/ai-scaffolder</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/your-github-org/ai-scaffolder</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="prometheus-net" Version="8.2.1" />
+  </ItemGroup>
+
+</Project>

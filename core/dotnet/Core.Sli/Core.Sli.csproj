@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    
+    <!-- NuGet Package Metadata -->
+    <PackageId>Core.Sli</PackageId>
+    <Version>1.0.5</Version>
+    <Authors>AI Platform Team</Authors>
+    <Company>ADC</Company>
+    <Description>Service Level Indicators (SLI) for AI services with standardized metrics tracking</Description>
+    <PackageTags>AI;sli;metrics;monitoring</PackageTags>
+    <RepositoryUrl>https://github.com/your-github-org/ai-scaffolder</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/your-github-org/ai-scaffolder</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Core.Metrics\Core.Metrics.csproj" />
+  </ItemGroup>
+
+</Project>
