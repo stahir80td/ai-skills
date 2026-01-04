@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🤖 AI Scaffolder
+# AI Scaffolder
 
 ### One prompt. Complete application. Running in minutes.
 
